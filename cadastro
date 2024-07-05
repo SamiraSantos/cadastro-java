@@ -1,0 +1,119 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Usuario {
+    private String nome;
+    private String email;
+
+    public Usuario(String nome, String email) {
+        this.nome = nome;
+        this.email = email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome + ", Email: " + email;
+    }
+}
+
+public class SistemaCadastroUsuarios {
+    private static ArrayList<Usuario> usuarios = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\n1. Adicionar usuário");
+            System.out.println("2. Visualizar usuários");
+            System.out.println("3. Editar usuário");
+            System.out.println("4. Deletar usuário");
+            System.out.println("5. Sair");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir nova linha
+
+            switch (opcao) {
+                case 1:
+                    adicionarUsuario();
+                    break;
+                case 2:
+                    visualizarUsuarios();
+                    break;
+                case 3:
+                    editarUsuario();
+                    break;
+                case 4:
+                    deletarUsuario();
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private static void adicionarUsuario() {
+        System.out.print("Digite o nome do usuário: ");
+        String nome = scanner.nextLine();
+        System.out.print("Digite o email do usuário: ");
+        String email = scanner.nextLine();
+        usuarios.add(new Usuario(nome, email));
+        System.out.println("Usuário adicionado com sucesso!");
+    }
+
+    private static void visualizarUsuarios() {
+        if (usuarios.isEmpty()) {
+            System.out.println("Nenhum usuário cadastrado.");
+        } else {
+            for (Usuario usuario : usuarios) {
+                System.out.println(usuario);
+            }
+        }
+    }
+
+    private static void editarUsuario() {
+        System.out.print("Digite o nome do usuário a ser editado: ");
+        String nome = scanner.nextLine();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNome().equals(nome)) {
+                System.out.print("Digite o novo nome: ");
+                usuario.setNome(scanner.nextLine());
+                System.out.print("Digite o novo email: ");
+                usuario.setEmail(scanner.nextLine());
+                System.out.println("Usuário editado com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Usuário não encontrado.");
+    }
+
+    private static void deletarUsuario() {
+        System.out.print("Digite o nome do usuário a ser deletado: ");
+        String nome = scanner.nextLine();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNome().equals(nome)) {
+                usuarios.remove(usuario);
+                System.out.println("Usuário deletado com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Usuário não encontrado.");
+    }
+}
